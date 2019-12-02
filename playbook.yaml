@@ -1,0 +1,45 @@
+---
+- hosts: all
+  become: true
+  vars:
+    tf_version: 0.12.16
+
+  tasks:
+
+  - name: update python
+    apt:
+      name: python3
+      update_cache: yes
+      state: latest
+
+  - name: install python3-pip
+    apt:
+      name: python3-pip
+      state: present
+
+  - name: install awscli
+    pip:
+      name: awscli
+      extra_args: --upgrade --user
+      state: present
+      executable: pip3
+
+  - name: download terraform
+    get_url:
+      url: "https://releases.hashicorp.com/terraform/{{ tf_version }}/terraform_{{ tf_version }}_linux_amd64.zip"
+      dest: /tmp/
+
+  - name: install unzip
+    apt:
+      name: unzip
+      state: present
+  
+  - name: unzip terraform
+    unarchive:
+      remote_src: yes
+      src: "/tmp/terraform_{{ tf_version }}_linux_amd64.zip"
+      dest: /usr/local/bin/
+
+
+
+      
