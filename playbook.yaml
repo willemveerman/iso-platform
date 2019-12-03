@@ -51,3 +51,10 @@
       remote_src: yes
       src: /tmp/eksctl_Linux_amd64.tar.gz
       dest: /usr/local/bin/
+
+  - name: get kubectl 1.14
+    get_url:
+      url: "https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/darwin/amd64/kubectl"
+      dest: /usr/local/bin/
+      mode: +x
+
